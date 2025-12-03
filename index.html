@@ -3,421 +3,1131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'IA avec esprit critique</title>
+    <title>Charte IA - Bruxelles Formation</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            color: #333;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 20px;
         }
-        
+
         .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .header h1 {
             color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 2.5em;
+            font-size: 2.5rem;
             margin-bottom: 10px;
-            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        
-        .subtitle {
-            font-size: 1.2em;
-            opacity: 0.95;
-            font-weight: 300;
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
         }
-        
-        .central-concept {
-            background: #f8f9fa;
-            padding: 40px;
-            text-align: center;
-            border-bottom: 3px solid #e9ecef;
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
         }
-        
-        .loop {
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .navigation {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin: 30px 0;
+            margin-bottom: 30px;
             flex-wrap: wrap;
-        }
-        
-        .loop-item {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            font-weight: 600;
-            color: #2c3e50;
-            position: relative;
-            transition: transform 0.3s;
-        }
-        
-        .loop-item:hover {
-            transform: translateY(-5px);
-        }
-        
-        .arrow {
-            color: #667eea;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        
-        .key-message {
-            background: #667eea;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-top: 20px;
-            font-size: 1.1em;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 0;
-        }
-        
-        .section {
-            padding: 40px;
-            position: relative;
-        }
-        
-        .section h2 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
             gap: 10px;
         }
-        
-        .icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+
+        .nav-btn {
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.05);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .principle-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .principle-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-        }
-        
-        .danger {
-            background: #fff5f5;
-            border-left: 4px solid #e74c3c;
-        }
-        
-        .danger .icon {
-            background: #e74c3c;
-            color: white;
-        }
-        
-        .success {
-            background: #f0fdf4;
-            border-left: 4px solid #27ae60;
-        }
-        
-        .success .icon {
-            background: #27ae60;
-            color: white;
-        }
-        
-        .info {
-            background: #f0f9ff;
-            border-left: 4px solid #3498db;
-        }
-        
-        .info .icon {
-            background: #3498db;
-            color: white;
-        }
-        
-        .warning {
-            background: #fffbeb;
-            border-left: 4px solid #f39c12;
-        }
-        
-        .warning .icon {
-            background: #f39c12;
-            color: white;
-        }
-        
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        li {
-            padding: 12px 0;
-            padding-left: 35px;
-            position: relative;
-            line-height: 1.6;
-        }
-        
-        li:before {
-            content: '';
-            position: absolute;
-            left: 10px;
-            top: 20px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: currentColor;
-            opacity: 0.5;
-        }
-        
-        .example {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .example-label {
-            font-weight: 600;
-            color: #667eea;
-            font-size: 0.9em;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .example-text {
-            font-family: 'Courier New', monospace;
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 3px solid #667eea;
-        }
-        
-        .footer {
-            background: #2c3e50;
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .principle {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 1.1em;
-            line-height: 1.6;
             margin-bottom: 20px;
         }
-        
-        .signature {
+
+        .principle-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            font-size: 0.95em;
-        }
-        
-        .cc-license {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.1);
-            padding: 8px 15px;
-            border-radius: 20px;
-        }
-        
-        .cc-license svg {
-            height: 20px;
-            width: auto;
-            fill: white;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            .loop {
-                flex-direction: column;
-            }
-            
-            .arrow {
-                transform: rotate(90deg);
-            }
-            
-            .signature {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-        
-        .pulse {
+            font-size: 24px;
+            margin-right: 20px;
             animation: pulse 2s infinite;
         }
-        
+
+        .principle-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .principle-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .principle-card.expanded .principle-content {
+            max-height: 500px;
+        }
+
+        .quiz-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .quiz-feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .scenario-container {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .scenario-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        }
+
+        .scenario-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .scenario-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .scenario-analysis {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+            font-style: italic;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         @keyframes pulse {
-            0% {
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
             }
-            50% {
-                box-shadow: 0 4px 25px rgba(102, 126, 234, 0.5);
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
-            100% {
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .principle-card {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 200px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="floating-elements">
+        <div class="floating-element" style="top: 10%; left: 10%; font-size: 60px;">🤖</div>
+        <div class="floating-element" style="top: 20%; right: 15%; font-size: 50px;">💡</div>
+        <div class="floating-element" style="bottom: 20%; left: 20%; font-size: 55px;">🎯</div>
+        <div class="floating-element" style="bottom: 10%; right: 10%; font-size: 45px;">🔒</div>
+    </div>
+
     <div class="container">
         <div class="header">
-            <h1>🧠 Utiliser l'IA avec Esprit Critique</h1>
-            <div class="subtitle">Comment transformer ChatGPT en véritable outil de réflexion</div>
+            <h1>Charte IA Interactive</h1>
+            <p>Bruxelles Formation - Appropriez-vous les 7 principes de l'IA éthique</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="score-display" id="scoreDisplay">Score: 0/24</div>
         </div>
-        
-        <div class="central-concept">
-            <h2 style="color: #2c3e50; margin-bottom: 10px;">💡 Le concept clé à comprendre</h2>
-            <p style="font-size: 1.1em; color: #555; margin-bottom: 20px;">
-                L'IA ne "pense" pas, elle prédit le mot suivant le plus probable selon ta question
-            </p>
-            
-            <div class="loop">
-                <div class="loop-item">Ta Question</div>
-                <div class="arrow">→</div>
-                <div class="loop-item">Contexte créé</div>
-                <div class="arrow">→</div>
-                <div class="loop-item">Réponse prédite</div>
-                <div class="arrow">→</div>
-                <div class="loop-item">Ta Question</div>
-            </div>
-            
-            <div class="key-message pulse">
-                ⚡ Tu es co-auteur·ice de chaque réponse de l'IA
-            </div>
+
+        <div class="navigation">
+            <button class="nav-btn active" onclick="showSection('overview')">Vue d'ensemble</button>
+            <button class="nav-btn" onclick="showSection('principles')">Les 7 Principes</button>
+            <button class="nav-btn" onclick="showSection('quiz')">Quiz Interactif</button>
+            <button class="nav-btn" onclick="showSection('scenarios')">Cas Pratiques</button>
         </div>
-        
-        <div class="grid">
-            <div class="section danger">
-                <h2>
-                    <span class="icon">⚠️</span>
-                    Les pièges à éviter
-                </h2>
-                <ul>
-                    <li><strong>L'effet miroir :</strong> L'IA copie ton style et confirme tes idées</li>
-                    <li><strong>La complaisance :</strong> Elle cherche à te satisfaire plutôt qu'à être exacte</li>
-                    <li><strong>La bulle :</strong> Tu dialogues avec tes propres idées reformulées</li>
-                </ul>
-                
-                <div class="example">
-                    <div class="example-label">Piège typique</div>
-                    <div class="example-text">
-                        ❌ "J'ai raison de penser que X est vrai, non ?"<br>
-                        → L'IA va probablement confirmer
-                    </div>
+
+        <!-- Vue d'ensemble -->
+        <div id="overview" class="content-section active">
+            <div class="principle-card">
+                <div class="principle-header">
+                    <div class="principle-icon" style="background: linear-gradient(45deg, #FF6B6B, #ee5a24);">🎯</div>
+                    <div class="principle-title">Bienvenue dans l'exploration interactive !</div>
                 </div>
-            </div>
-            
-            <div class="section success">
-                <h2>
-                    <span class="icon">✨</span>
-                    Techniques pour mieux réfléchir
-                </h2>
-                <ul>
-                    <li><strong>Demander plusieurs angles :</strong> "Donne-moi 3 façons différentes de voir ce problème"</li>
-                    <li><strong>Chercher les failles :</strong> "Où mon raisonnement pourrait être trop simple ?"</li>
-                    <li><strong>Inverser les rôles :</strong> "Quelles questions devrais-je me poser sur ce sujet ?"</li>
-                </ul>
-                
-                <div class="example">
-                    <div class="example-label">Bonne pratique</div>
-                    <div class="example-text">
-                        ✅ "Argumente CONTRE cette idée : [ton idée]"<br>
-                        → Force l'IA à te challenger
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section info">
-                <h2>
-                    <span class="icon">🎯</span>
-                    Comment formuler tes demandes
-                </h2>
-                <ul>
-                    <li><strong>Sois précis·e :</strong> Chaque mot oriente la réponse</li>
-                    <li><strong>Impose des contraintes :</strong> "Explique comme à un·e enfant" ou "En 3 points maximum"</li>
-                    <li><strong>Varie les approches :</strong> Reformule différemment pour explorer</li>
-                </ul>
-                
-                <div class="example">
-                    <div class="example-label">Transformation utile</div>
-                    <div class="example-text">
-                        Au lieu de : "C'est quoi le marketing ?"<br>
-                        Essaie : "Compare 3 définitions contradictoires du marketing"
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section warning">
-                <h2>
-                    <span class="icon">🔄</span>
-                    Créer de la friction cognitive
-                </h2>
-                <ul>
-                    <li><strong>Force la contradiction :</strong> Demande toujours un contre-argument</li>
-                    <li><strong>Multiplie les perspectives :</strong> "Comment un·e économiste, un·e philosophe et un·e ingénieur·e verraient ce problème ?"</li>
-                    <li><strong>Teste la robustesse :</strong> "Quelle est la plus grosse faiblesse de cette approche ?"</li>
-                </ul>
-                
-                <div class="example">
-                    <div class="example-label">Question puissante</div>
-                    <div class="example-text">
-                        💪 "Si tu devais me convaincre du contraire, quels seraient tes 3 meilleurs arguments ?"
-                    </div>
+                <div class="principle-content" style="max-height: none;">
+                    <p><strong>Objectif :</strong> Maîtriser les 7 principes de la charte IA de Bruxelles Formation de manière interactive et engageante.</p>
+                    <br>
+                    <p><strong>Comment ça marche :</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Les 7 Principes :</strong> Découvrez chaque principe avec des explications détaillées</li>
+                        <li><strong>Quiz Interactif :</strong> Testez vos connaissances avec 24 questions</li>
+                        <li><strong>Cas Pratiques :</strong> Analysez des situations réelles</li>
+                    </ul>
+                    <br>
+                    <p>Votre progression est suivie en temps réel. Bonne exploration !</p>
                 </div>
             </div>
         </div>
-        
-        <div class="footer">
-            <div class="principle">
-                <strong>🎓 Principe fondamental :</strong><br>
-                La qualité de la réponse ne dépend pas de l'intelligence de l'IA,<br>
-                mais de ta capacité à structurer des questions qui génèrent de la réflexion critique.
+
+        <!-- Les 7 Principes -->
+        <div id="principles" class="content-section">
+            <div class="principle-card" onclick="toggleCard(this)">
+                <div class="principle-header">
+                    <div class="principle-icon" style="background: linear-gradient(45deg, #4CAF50, #45a049);">👥</div>
+                    <div class="principle-title">1. L'IA au service de l'humain</div>
+                </div>
+                <div class="principle-content">
+                    <p><strong>Principe :</strong> L'IA est un outil au service de l'humain et non une fin en soi.</p>
+                    <br>
+                    <p><strong>En pratique :</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>L'IA apporte une valeur ajoutée sans remplacer les compétences humaines</li>
+                        <li>Un accompagnement humain reste toujours disponible</li>
+                        <li>L'empathie et le soutien émotionnel restent du domaine humain</li>
+                    </ul>
+                    <br>
+                    <p><strong>Exemple :</strong> Un chatbot peut répondre aux questions fréquentes, mais un formateur reste disponible pour les cas complexes nécessitant de l'empathie.</p>
+                </div>
             </div>
-            
-            <div class="signature">
-                <span><strong>Rochane Kherbouche</strong></span>
-                <div class="cc-license">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="30" fill="none" stroke="white" stroke-width="4"/>
-                        <path d="M32 15c-9.4 0-17 7.6-17 17s7.6 17 17 17c4.5 0 8.6-1.7 11.7-4.6l-4.2-3.7c-2.1 1.8-4.7 2.8-7.5 2.8-6.4 0-11.5-5.2-11.5-11.5S25.6 20.5 32 20.5c2.8 0 5.4 1 7.5 2.8l4.2-3.7C40.6 16.7 36.5 15 32 15z"/>
-                        <path d="M41 27c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 5.5c-0.8 0-1.5-0.7-1.5-1.5s0.7-1.5 1.5-1.5 1.5 0.7 1.5 1.5-0.7 1.5-1.5 1.5z"/>
-                    </svg>
-                    <span>CC BY-SA</span>
+
+            <div class="principle-card" onclick="toggleCard(this)">
+                <div class="principle-header">
+                    <div class="principle-icon" style="background: linear-gradient(45deg, #2196F3, #1976D2);">🔒</div>
+                    <div class="principle-title">2. Respect de la confidentialité (RGPD)</div>
+                </div>
+                <div class="principle-content">
+                    <p><strong>Principe :</strong> Protection absolue des données personnelles et stratégiques.</p>
+                    <br>
+                    <p><strong>Interdictions strictes :</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>❌ Aucune donnée personnelle dans les outils IA (nom, prénom, email, photos)</li>
+                        <li>❌ Aucune donnée stratégique de Bruxelles Formation</li>
+                        <li>✅ Anonymisation complète des données</li>
+                    </ul>
+                    <br>
+                    <p><strong>Exemple :</strong> Pour analyser des évaluations, utilisez "Stagiaire A, B, C" au lieu des vrais noms.</p>
+                </div>
+            </div>
+
+            <div class="principle-card" onclick="toggleCard(this)">
+                <div class="principle-header">
+                    <div class="principle-icon" style="background: linear-gradient(45deg, #FF9800, #F57C00);">©️</div>
+                    <div class="principle-title">3. Respect de la propriété intellectuelle</div>
+                </div>
+                <div class="principle-content">
+                    <p><strong>Principe :</strong> Utilisation respectueuse des contenus et des sources.</p>
+                    <br>
+                    <p><strong>Bonnes pratiques :</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Vérifier les droits d'utilisation des contenus</li>
+                        <li>Citer systématiquement les sources</li>
+                        <li>Respecter les licences et droits d'auteur</li>
+                    </ul>
+                    <br>
+                    <p><strong>Exemple :</strong> Si l'IA vous aide à créer du contenu, mentionnez "Contenu créé avec l'assistance de l'IA" et citez vos sources.</p>
+                </div>
+            </div>
+
+            <div class="principle-card" onclick="toggleCard(this)">
+                <div class="principle-header">
+                    <div class="principle-icon" style="background: linear-gradient(45deg, #9C27B0, #7B1FA2);">🔍</div>
+                    <div class="principle-title">4. Transparence</div>
+                </div>
+                <div class="principle-content">
+                    <p><strong>Principe :</strong> Information claire sur l'utilisation de l'IA.</p>
+                    <br>
+                    <p><strong>Obligations :</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Informer quand et comment l'IA intervient</li>
+                        <li>Indiquer précisément tout élément produit par/avec l'IA</li>
+                        <li>Communication accessible et compréhensible</li>
+                    </ul>
+                    <br>
+                    <p><strong>Exemple :</strong> "Ce rapport a été rédigé avec l'assistance de l'IA pour la mise en forme et la correction linguistique."</p>
+                </div>
+            </div>
+
+            <div class="principle-card" onclick="toggleCard(this)">
+                <div class="principle-header">
+                    <div class="principle-icon" style="background: linear-gradient(45deg, #00BCD4, #0097A7);">♿</div>
+                    <div class="principle-title">5. Accessibilité et inclusivité</div>
+                </div>
+                <div class="principle-content">
+                    <p><strong>Principe :</strong> L'IA ne doit pas créer de nouvelles inégalités.</p>
+                    <br>
+                    <p><strong>Considérations :</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Tenir compte des différents niveaux de compétences numériques</li>
+                        <li>Proposer des alternatives pour tous</li>
+                        <li>Éviter l'exclusion numérique</li>
+                    </ul>
+                    <br>
+                    <p><strong>Exemple :</strong> Proposer à la fois un assistant IA et des sessions en présentiel pour s'adapter à tous les profils.</p>
+                </div>
+            </div>
+
+            <div class="principle-card" onclick="toggleCard(this)">
+                <div class="principle-header">
+                    <div class="principle-icon" style="background: linear-gradient(45deg, #FF5722, #D84315);">🧠</div>
+                    <div class="principle-title">6. Esprit critique et discernement</div>
+                </div>
+                <div class="principle-content">
+                    <p><strong>Principe :</strong> L'IA aide, mais la responsabilité finale reste humaine.</p>
+                    <br>
+                    <p><strong>Attitudes à adopter :</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Interpréter les résultats avec prudence</li>
+                        <li>Comprendre les limites de l'IA</li>
+                        <li>Diversifier les sources de données</li>
+                        <li>Valider les résultats obtenus</li>
+                        <li>Utiliser l'IA dans son domaine d'expertise</li>
+                    </ul>
+                    <br>
+                    <p><strong>Rappel :</strong> Vous êtes responsable de ce que vous validez et diffusez !</p>
+                </div>
+            </div>
+
+            <div class="principle-card" onclick="toggleCard(this)">
+                <div class="principle-header">
+                    <div class="principle-icon" style="background: linear-gradient(45deg, #795548, #5D4037);">🌱</div>
+                    <div class="principle-title">7. Éthique et responsabilité sociétale</div>
+                </div>
+                <div class="principle-content">
+                    <p><strong>Principe :</strong> Utilisation éthique et responsable de l'IA.</p>
+                    <br>
+                    <p><strong>Vigilance sur :</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Éviter les biais et discriminations</li>
+                        <li>Prévenir les manipulations</li>
+                        <li>Considérer l'impact énergétique</li>
+                        <li>Évaluer la pertinence avant utilisation</li>
+                    </ul>
+                    <br>
+                    <p><strong>Question à se poser :</strong> "L'IA est-elle vraiment l'outil approprié pour cette tâche ?"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz -->
+        <div id="quiz" class="content-section">
+            <div id="quizContainer"></div>
+            <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">🔄 Recommencer le quiz</button>
+        </div>
+
+        <!-- Scénarios -->
+        <div id="scenarios" class="content-section">
+            <div class="scenario-container">
+                <div class="scenario-card">
+                    <div class="scenario-title">Création de contenu pédagogique</div>
+                    <div class="scenario-content">
+                        <strong>Situation :</strong> Un formateur utilise ChatGPT pour créer un cours sur Excel en incluant les noms de ses stagiaires dans les exemples.
+                    </div>
+                    <div class="scenario-analysis">
+                        <strong>Analyse :</strong> ❌ Violation du principe 2 (RGPD). Solution : utiliser des noms fictifs ou génériques comme "Participant A".
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-title">Évaluation automatisée</div>
+                    <div class="scenario-content">
+                        <strong>Situation :</strong> Une IA évalue automatiquement des CV sans supervision humaine pour présélectionner des candidats.
+                    </div>
+                    <div class="scenario-analysis">
+                        <strong>Analyse :</strong> ❌ Viole les principes 1 et 6. Solution : l'IA aide au tri, mais un humain valide toujours les décisions finales.
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-title">Rapport généré par IA</div>
+                    <div class="scenario-content">
+                        <strong>Situation :</strong> Un agent envoie un rapport entièrement généré par IA sans mentionner cette utilisation.
+                    </div>
+                    <div class="scenario-analysis">
+                        <strong>Analyse :</strong> ❌ Violation du principe 4 (transparence). Solution : mentionner clairement l'utilisation de l'IA.
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-title">Assistant virtuel inclusif</div>
+                    <div class="scenario-content">
+                        <strong>Situation :</strong> Mise en place d'un chatbot avec option de contact humain pour les personnes moins à l'aise avec le numérique.
+                    </div>
+                    <div class="scenario-analysis">
+                        <strong>Analyse :</strong> ✅ Respecte les principes 1 et 5. Bonne pratique d'accessibilité et de maintien du contact humain.
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-title">Personnalisation pédagogique</div>
+                    <div class="scenario-content">
+                        <strong>Situation :</strong> Une IA adapte le rythme d'apprentissage selon les performances, mais un formateur supervise et ajuste.
+                    </div>
+                    <div class="scenario-analysis">
+                        <strong>Analyse :</strong> ✅ Respecte le principe 1. L'IA améliore l'expérience tout en gardant l'humain au centre.
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-title">Impact environnemental</div>
+                    <div class="scenario-content">
+                        <strong>Situation :</strong> Utilisation intensive d'IA pour des tâches simples qu'un humain pourrait faire rapidement.
+                    </div>
+                    <div class="scenario-analysis">
+                        <strong>Analyse :</strong> ❌ Viole le principe 7. Solution : évaluer la pertinence et l'impact énergétique avant utilisation.
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        let currentSection = 'overview';
+        let quizScore = 0;
+        let totalQuestions = 24;
+        let currentQuestionIndex = 0;
+
+        const quizQuestions = [
+            // Principe 1 : L'IA au service de l'humain
+            {
+                question: "Selon le principe 1, l'IA peut-elle remplacer complètement un formateur ?",
+                options: [
+                    "Oui, si elle est suffisamment avancée",
+                    "Non, l'IA est un outil d'aide, pas un remplaçant",
+                    "Seulement pour certains cours techniques",
+                    "Cela dépend du niveau des stagiaires"
+                ],
+                correct: 1,
+                explanation: "L'IA est un outil au service de l'humain, elle ne doit jamais se substituer complètement aux compétences humaines, notamment l'empathie et le soutien émotionnel."
+            },
+            {
+                question: "Quelle est la valeur ajoutée principale de l'IA selon la charte ?",
+                options: [
+                    "Remplacer les tâches humaines",
+                    "Améliorer l'efficacité tout en gardant l'humain au centre",
+                    "Réduire les coûts de formation",
+                    "Automatiser tous les processus"
+                ],
+                correct: 1,
+                explanation: "L'IA doit apporter une valeur ajoutée à l'exercice des missions sans se substituer aux compétences humaines."
+            },
+            {
+                question: "Bruxelles Formation doit-elle toujours garantir un accompagnement humain ?",
+                options: [
+                    "Non, si l'IA est efficace",
+                    "Seulement pour les cas complexes",
+                    "Oui, toujours en complément des outils d'IA",
+                    "Seulement sur demande"
+                ],
+                correct: 2,
+                explanation: "La charte stipule clairement que Bruxelles Formation garantit toujours un accompagnement et un support humain, en complément des outils d'IA."
+            },
+
+            // Principe 2 : RGPD
+            {
+                question: "Peut-on utiliser des noms réels de stagiaires dans une IA ?",
+                options: [
+                    "Oui, si c'est pour améliorer l'apprentissage",
+                    "Non, jamais selon le RGPD",
+                    "Seulement avec leur accord écrit",
+                    "Oui, si les données restent internes"
+                ],
+                correct: 1,
+                explanation: "Aucune donnée personnelle (nom, prénom, adresse mail, photos, etc.) ne peut être injectée dans des outils à base d'IA."
+            },
+            {
+                question: "Quelles données sont strictement interdites dans les outils IA ?",
+                options: [
+                    "Seulement les données sensibles",
+                    "Les données personnelles ET stratégiques de BF",
+                    "Seulement les données des stagiaires",
+                    "Aucune restriction particulière"
+                ],
+                correct: 1,
+                explanation: "La charte interdit à la fois les données personnelles (stagiaires et agents) ET les données stratégiques de Bruxelles Formation."
+            },
+            {
+                question: "Comment traiter des données pour les analyser par l'IA ?",
+                options: [
+                    "Les utiliser telles quelles",
+                    "Les anonymiser complètement",
+                    "Demander l'autorisation à chaque personne",
+                    "Les chiffrer seulement"
+                ],
+                correct: 1,
+                explanation: "Pour respecter le RGPD, toutes les données doivent être anonymisées avant utilisation dans des outils d'IA."
+            },
+
+            // Principe 3 : Propriété intellectuelle
+            {
+                question: "Lors de l'utilisation d'IA, que faut-il systématiquement faire ?",
+                options: [
+                    "Rien de particulier",
+                    "Vérifier les droits et citer les sources",
+                    "Seulement vérifier la qualité",
+                    "Garder l'utilisation secrète"
+                ],
+                correct: 1,
+                explanation: "Il faut toujours vérifier les droits d'utilisation des contenus et citer les sources pour respecter la propriété intellectuelle."
+            },
+            {
+                question: "Si l'IA vous aide à créer du contenu, comment le mentionner ?",
+                options: [
+                    "Pas besoin de le mentionner",
+                    "Indiquer clairement l'assistance de l'IA",
+                    "Seulement dans les métadonnées",
+                    "Le mentionner oralement seulement"
+                ],
+                correct: 1,
+                explanation: "La transparence exige d'indiquer précisément et systématiquement tout élément produit par ou avec l'aide de l'IA."
+            },
+            {
+                question: "Les licences et droits d'auteur s'appliquent-ils aux contenus générés par IA ?",
+                options: [
+                    "Non, l'IA est libre de droits",
+                    "Oui, il faut les respecter",
+                    "Seulement pour les contenus commerciaux",
+                    "Cela dépend de l'outil utilisé"
+                ],
+                correct: 1,
+                explanation: "L'IA doit être utilisée dans le respect des droits de propriété intellectuelle, en vérifiant les droits d'utilisation des contenus."
+            },
+
+            // Principe 4 : Transparence
+            {
+                question: "Quand faut-il informer de l'utilisation de l'IA ?",
+                options: [
+                    "Seulement si on nous le demande",
+                    "Toujours, de manière claire et accessible",
+                    "Jamais, c'est confidentiel",
+                    "Seulement pour les décisions importantes"
+                ],
+                correct: 1,
+                explanation: "Tout agent et usager doit être informé de quand et comment l'IA intervient dans les processus qui les concernent."
+            },
+            {
+                question: "Comment indiquer qu'un document a été créé avec l'IA ?",
+                options: [
+                    "En petit caractères à la fin",
+                    "Précisément et systématiquement",
+                    "Seulement si c'est demandé",
+                    "Dans les métadonnées cachées"
+                ],
+                correct: 1,
+                explanation: "Le recours à l'IA doit faire l'objet d'une information claire, en indiquant précisément et systématiquement tout élément produit par/avec l'IA."
+            },
+            {
+                question: "L'information sur l'utilisation de l'IA doit être :",
+                options: [
+                    "Technique et détaillée",
+                    "Claire et accessible à tous",
+                    "Réservée aux experts",
+                    "Optionnelle selon les cas"
+                ],
+                correct: 1,
+                explanation: "L'information doit être claire et accessible pour que tous puissent comprendre quand et comment l'IA intervient."
+            },
+
+            // Principe 5 : Accessibilité et inclusivité
+            {
+                question: "L'utilisation de l'IA peut-elle créer de nouvelles inégalités ?",
+                options: [
+                    "Non, jamais",
+                    "Oui, et il faut l'éviter",
+                    "C'est inévitable",
+                    "Seulement pour les personnes âgées"
+                ],
+                correct: 1,
+                explanation: "L'utilisation de l'IA ne doit pas créer de nouvelles inégalités, notamment liées aux niveaux de compétences numériques."
+            },
+            {
+                question: "Comment assurer l'inclusivité avec l'IA ?",
+                options: [
+                    "Forcer tout le monde à l'utiliser",
+                    "Proposer des alternatives pour tous les profils",
+                    "Former tout le monde au numérique",
+                    "Ignorer les différences de niveau"
+                ],
+                correct: 1,
+                explanation: "Il faut tenir compte des différents niveaux de compétences numériques et proposer des alternatives inclusives."
+            },
+            {
+                question: "Qui doit pouvoir bénéficier des services de Bruxelles Formation ?",
+                options: [
+                    "Seulement les personnes à l'aise avec le numérique",
+                    "Tout le monde, quel que soit le niveau numérique",
+                    "Les jeunes principalement",
+                    "Selon les formations proposées"
+                ],
+                correct: 1,
+                explanation: "L'accessibilité implique que tous puissent bénéficier des services, indépendamment de leurs compétences numériques."
+            },
+
+            // Principe 6 : Esprit critique
+            {
+                question: "Qui est responsable des décisions finales quand on utilise l'IA ?",
+                options: [
+                    "L'IA elle-même",
+                    "L'utilisateur humain",
+                    "Le développeur de l'IA",
+                    "L'organisation"
+                ],
+                correct: 1,
+                explanation: "L'IA est un outil d'aide mais la responsabilité finale incombe toujours à l'utilisateur."
+            },
+            {
+                question: "Comment doit-on interpréter les résultats de l'IA ?",
+                options: [
+                    "Comme des vérités absolues",
+                    "Avec prudence et esprit critique",
+                    "En les appliquant directement",
+                    "En les ignorant"
+                ],
+                correct: 1,
+                explanation: "Les résultats de l'IA doivent être interprétés avec prudence et esprit critique, en comprenant ses limites."
+            },
+            {
+                question: "Pour exercer son esprit critique avec l'IA, que recommande la charte ?",
+                options: [
+                    "Utiliser l'IA dans tous les domaines",
+                    "Avoir des compétences dans le domaine traité",
+                    "Faire confiance aveuglément à l'IA",
+                    "Éviter complètement l'IA"
+                ],
+                correct: 1,
+                explanation: "Il est recommandé d'avoir des compétences dans le domaine traité pour pouvoir exercer son esprit critique et évaluer la pertinence des résultats de l'IA."
+            },
+
+            // Principe 7 : Éthique et responsabilité
+            {
+                question: "Avant d'utiliser l'IA, que faut-il évaluer ?",
+                options: [
+                    "Seulement le coût",
+                    "Si c'est l'outil approprié pour la tâche",
+                    "Seulement la rapidité",
+                    "La popularité de l'outil"
+                ],
+                correct: 1,
+                explanation: "Avant d'y recourir, il est important d'évaluer s'il s'agit de l'outil approprié pour la tâche à accomplir."
+            },
+            {
+                question: "Quel aspect environnemental faut-il considérer ?",
+                options: [
+                    "Aucun",
+                    "Le coût énergétique très lourd de l'IA",
+                    "Seulement les déchets électroniques",
+                    "L'utilisation du papier"
+                ],
+                correct: 1,
+                explanation: "Il faut considérer que le coût énergétique de l'IA est très lourd, d'où l'importance d'une utilisation raisonnée."
+            },
+            {
+                question: "Comment éviter les biais dans l'IA ?",
+                options: [
+                    "C'est impossible",
+                    "Diversifier les sources et valider les résultats",
+                    "Utiliser une seule source fiable",
+                    "Ignorer le problème"
+                ],
+                correct: 1,
+                explanation: "Il faut prendre des mesures pour atténuer les risques de biais en diversifiant les sources de données et en validant les résultats."
+            },
+
+            // Questions transversales
+            {
+                question: "Combien de principes contient la charte IA de Bruxelles Formation ?",
+                options: [
+                    "5 principes",
+                    "7 principes",
+                    "10 principes",
+                    "3 principes"
+                ],
+                correct: 1,
+                explanation: "La charte contient exactement 7 principes, présentés sous forme d'engagements."
+            },
+            {
+                question: "Cette charte peut-elle évoluer ?",
+                options: [
+                    "Non, elle est définitive",
+                    "Oui, selon les évolutions technologiques et réglementaires",
+                    "Seulement tous les 10 ans",
+                    "Seulement en cas de problème"
+                ],
+                correct: 1,
+                explanation: "La charte pourra être révisée en fonction des évolutions technologiques, réglementaires et des retours d'expérience."
+            },
+            {
+                question: "Quel est l'objectif principal de cette charte ?",
+                options: [
+                    "Interdire l'utilisation de l'IA",
+                    "Définir un cadre éthique et responsable",
+                    "Promouvoir l'IA à tout prix",
+                    "Remplacer les formateurs"
+                ],
+                correct: 1,
+                explanation: "L'objectif est de définir un cadre éthique et responsable pour l'utilisation de l'intelligence artificielle à Bruxelles Formation."
+            },
+
+            // Questions supplémentaires pour atteindre 24
+            {
+                question: "Selon la charte, l'IA doit-elle se substituer aux compétences humaines ?",
+                options: [
+                    "Oui, c'est l'objectif principal",
+                    "Non, jamais",
+                    "Seulement pour les tâches répétitives",
+                    "Cela dépend du contexte"
+                ],
+                correct: 1,
+                explanation: "L'IA ne doit jamais se substituer aux compétences humaines, elle doit apporter une valeur ajoutée en complément."
+            },
+            {
+                question: "Qui a participé à la rédaction de cette charte ?",
+                options: [
+                    "Seulement la direction",
+                    "Un groupe de travail interne avec assistance IA",
+                    "Une société externe",
+                    "Les stagiaires"
+                ],
+                correct: 1,
+                explanation: "La charte a été rédigée par un groupe de travail interne avec le recours de l'IA comme assistant de rédaction, tout en gardant le contrôle total du fond."
+            },
+            {
+                question: "Quelle attitude adopter face aux recommandations de l'IA ?",
+                options: [
+                    "Les appliquer systématiquement",
+                    "Ne pas les considérer pour argent comptant",
+                    "Les ignorer complètement",
+                    "Les modifier sans réflexion"
+                ],
+                correct: 1,
+                explanation: "Il est important de ne pas considérer les recommandations de l'IA pour argent comptant et de toujours exercer son esprit critique."
+            }
+        ];
+
+        function showSection(sectionId) {
+            // Cacher toutes les sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Retirer la classe active des boutons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Afficher la section demandée
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Activer le bouton correspondant
+            event.target.classList.add('active');
+            
+            currentSection = sectionId;
+            
+            // Générer le quiz si nécessaire
+            if (sectionId === 'quiz') {
+                generateQuiz();
+            }
+            
+            updateProgress();
+        }
+
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+        }
+
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            
+            quizQuestions.forEach((q, index) => {
+                const quizDiv = document.createElement('div');
+                quizDiv.className = 'quiz-container';
+                quizDiv.innerHTML = `
+                    <div class="quiz-question"><strong>Question ${index + 1}/24:</strong> ${q.question}</div>
+                    <div class="quiz-options" id="options-${index}">
+                        ${q.options.map((option, i) => 
+                            `<div class="quiz-option" onclick="selectAnswer(${index}, ${i})">${option}</div>`
+                        ).join('')}
+                    </div>
+                    <div class="quiz-feedback" id="feedback-${index}"></div>
+                `;
+                container.appendChild(quizDiv);
+            });
+
+            // Ajouter la zone de score final
+            const finalScoreDiv = document.createElement('div');
+            finalScoreDiv.id = 'finalScore';
+            finalScoreDiv.style.display = 'none';
+            finalScoreDiv.className = 'quiz-container';
+            finalScoreDiv.innerHTML = `
+                <div style="text-align: center; padding: 30px;">
+                    <h2 style="color: #333; margin-bottom: 20px;">🎉 Quiz terminé !</h2>
+                    <div id="finalScoreText" style="font-size: 2rem; font-weight: bold; margin: 20px 0;"></div>
+                    <div id="finalScoreMessage" style="font-size: 1.2rem; margin: 20px 0;"></div>
+                    <button class="btn-primary" onclick="resetQuiz()" style="margin-top: 20px;">🔄 Recommencer le quiz</button>
+                </div>
+            `;
+            container.appendChild(finalScoreDiv);
+        }
+
+        function selectAnswer(questionIndex, selectedOption) {
+            const question = quizQuestions[questionIndex];
+            const options = document.getElementById(`options-${questionIndex}`);
+            const feedback = document.getElementById(`feedback-${questionIndex}`);
+            
+            // Désactiver toutes les options
+            const optionElements = options.querySelectorAll('.quiz-option');
+            optionElements.forEach((opt, i) => {
+                opt.style.pointerEvents = 'none';
+                if (i === question.correct) {
+                    opt.classList.add('correct');
+                } else if (i === selectedOption && i !== question.correct) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // Afficher le feedback
+            const isCorrect = selectedOption === question.correct;
+            feedback.className = `quiz-feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✅ Correct !' : '❌ Incorrect'}</strong><br>
+                ${question.explanation}
+            `;
+            
+            // Mettre à jour le score
+            if (isCorrect) {
+                quizScore++;
+                updateScore();
+                updateProgress();
+            }
+
+            // Vérifier si c'est la dernière question
+            checkQuizCompletion();
+        }
+
+        function checkQuizCompletion() {
+            // Compter le nombre de questions répondues
+            const answeredQuestions = document.querySelectorAll('.quiz-feedback.show').length;
+            
+            if (answeredQuestions === totalQuestions) {
+                // Afficher le score final
+                showFinalScore();
+            }
+        }
+
+        function showFinalScore() {
+            const finalScoreDiv = document.getElementById('finalScore');
+            const finalScoreText = document.getElementById('finalScoreText');
+            const finalScoreMessage = document.getElementById('finalScoreMessage');
+            
+            const percentage = Math.round((quizScore / totalQuestions) * 100);
+            
+            finalScoreText.textContent = `${quizScore}/${totalQuestions} (${percentage}%)`;
+            
+            let message = '';
+            let color = '';
+            
+            if (percentage >= 90) {
+                message = '🌟 Excellent ! Vous maîtrisez parfaitement la charte IA !';
+                color = '#4CAF50';
+            } else if (percentage >= 75) {
+                message = '👏 Très bien ! Vous avez une bonne compréhension des principes.';
+                color = '#2196F3';
+            } else if (percentage >= 60) {
+                message = '📚 Bien ! Il reste quelques points à approfondir.';
+                color = '#FF9800';
+            } else {
+                message = '💪 À retravailler ! Relisez les principes et recommencez.';
+                color = '#F44336';
+            }
+            
+            finalScoreText.style.color = color;
+            finalScoreMessage.textContent = message;
+            finalScoreMessage.style.color = color;
+            
+            finalScoreDiv.style.display = 'block';
+            finalScoreDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            quizScore = 0;
+            currentQuestionIndex = 0;
+            updateScore();
+            updateProgress();
+            generateQuiz();
+            
+            // Remonter en haut du quiz
+            document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateScore() {
+            document.getElementById('scoreDisplay').textContent = `Score: ${quizScore}/${totalQuestions}`;
+        }
+
+        function updateProgress() {
+            let progress = 0;
+            
+            if (currentSection === 'overview') progress = 10;
+            else if (currentSection === 'principles') progress = 30;
+            else if (currentSection === 'quiz') progress = 50 + (quizScore / totalQuestions) * 40;
+            else if (currentSection === 'scenarios') progress = 100;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // Animation des éléments flottants
+        function animateFloatingElements() {
+            const elements = document.querySelectorAll('.floating-element');
+            elements.forEach((el, index) => {
+                el.style.animationDelay = (index * 1.5) + 's';
+            });
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            updateScore();
+            updateProgress();
+            animateFloatingElements();
+        });
+
+    </script>
 </body>
 </html>
